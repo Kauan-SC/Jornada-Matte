@@ -53,7 +53,7 @@ def create_stage_2(project: dict) -> str | None:
             assignees=RoleAssignees.GESTOR,
             due_date=data
             )
-       
+
     logger.info(f"Etapa 2 iniciada - {project['company_name']} - Task-Id: {task_id}")
     return task_id
        

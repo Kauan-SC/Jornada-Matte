@@ -5,7 +5,7 @@ from integrations.clickup import is_task_completed
 
 logger = get_logger(__name__)
 
-# Check if projects are completed using the ID to get the task infos
+# Verifica se os projetos estão concluídos usando o ID para obter as informações da tarefa
 def check_stage_4a() -> None:
     projects = get_active_projects_by_stage(Stages.STAGE_4)
 

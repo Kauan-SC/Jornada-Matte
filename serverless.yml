@@ -20,16 +20,10 @@ functions:
 
   checker:
     handler: handler.check_stages
-    timeout: 60
+    timeout: 300
     events:
       - schedule: cron(0/10 11-21 ? * MON-FRI *)
     
-  dashboard:
-    handler: handler.dashboard
-    timeout: 60
-    events:
-      - schedule: rate(1 hour)
-
 plugins:
   - serverless-python-requirements
 

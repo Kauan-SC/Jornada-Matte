@@ -74,13 +74,21 @@ def run(client_name: str, company_name: str) -> dict | None:
 # ----------------------------------------------------------------------------------------------------------------------------------------------
 
     # Criar as subtarefas no ClickUp
+    falhas = []
     for subtask in SUBTASKS:
-        create_subtask(
+        resultado = create_subtask(
             parent_task_id=task_id,
             name=subtask["name"],
             description=subtask.get("description", ""),
             assignees=RoleAssignees.GESTOR,
             due_date=data
+        )
+        if resultado is None:
+            falhas.append(subtask["name"])
+
+    if falhas:
+        raise RuntimeError(
+            f"Falha ao criar subtarefa(s) no ClickUp para a tarefa '{task_id}': {', '.join(falhas)}"
         )
 
 

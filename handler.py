@@ -25,7 +25,7 @@ def webhook(event: dict, context: object) -> dict:
 
         run(client_name, company_name)            
 
-        logger.info(f"Webhook recebecido - {company_name} {client_name}")
+        logger.info(f"Projeto Iniciado - {company_name} {client_name}", extra={"notify_acompanhamento": True})
 
         return {
             "statusCode": 200,
@@ -45,7 +45,7 @@ def webhook(event: dict, context: object) -> dict:
 
 MAX_TENTATIVAS = 3
 
-# Check completed tasks
+# Verifica as tarefas concluídas
 def check_stages(event: dict, context: object) -> dict:
 
     from stages.stage_1.stage_1_check import check_stage_1
@@ -79,26 +79,7 @@ def check_stages(event: dict, context: object) -> dict:
                     break
                 
                 else:
-                    time.sleep(60)
+                    time.sleep(3)
 
     return {"statusCode": 200, "body": json.dumps({"Ok": True})}
 
-#  --------------------------------------------------------------------------
-
-# Dashboard
-def dashboard(event: dict, context: object) -> dict:
-    try:
-        from integrations.clickup import get_tasks
-        tarefas = get_tasks()
-        return {
-            "statusCode": 200,
-            "body":json.dumps(tarefas),
-
-        }
-    except Exception as e:
-        logger.error(f"Erro no Get_task do Dashboard: {type(e).__name__}: {e}")
-        logger.error(traceback.format_exc())
-        return {
-            "statusCode": 500,
-            "body": json.dumps({"Error": str(e)}),
-        }

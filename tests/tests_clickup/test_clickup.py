@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from integrations.clickup import create_task, create_subtask
 
-# Create a Task
+# Criar uma Tarefa
 task = create_task(
     name="[TESTE] Abertura do Projeto",
     description="Tarefa de teste — pode apagar",
@@ -14,7 +14,7 @@ task = create_task(
 )
 
 if task:
-    # Create Sub-task
+    # Criar Sub-tarefa
     create_subtask(
         parent_task_id=task["id"],
         name="[TESTE] Sub-tarefa de exemplo",

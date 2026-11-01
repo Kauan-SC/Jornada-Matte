@@ -18,7 +18,7 @@ def get_reviewer_dev(task_id_3b: str) -> list[int]:
 
     return [random.choice(other_devs)] if other_devs else [random.choice(RoleAssignees.DEVS)]
 
-# Create Task - Third Step - Verification of AI
+# Criar Tarefa - Terceira Etapa - Verificação da IA
 def create_stage_3c(project: dict) -> str | None:
 
     # Histórico do projeto no log
@@ -57,5 +57,8 @@ def create_stage_3c(project: dict) -> str | None:
         return None
     
     task_id = task["id"]
-    logger.info(f"Etapa 3C iniciada - {project['company_name']} - Task-Id: {task_id}")
+    logger.info(
+        f"{project['company_name']} está na etapa de Revisar a IA - Task-Id: {task_id}",
+        extra={"notify_acompanhamento": True},
+    )
     return task_id
