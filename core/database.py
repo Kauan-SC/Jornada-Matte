@@ -29,7 +29,7 @@ def update_project(project_id: str, new_stage: str, new_task_id: str, new_task_i
     data = {
         "current_stage": new_stage,
         "task_id": new_task_id,
-        "started_at": datetime.now(timezone.utc),
+        "started_at": datetime.now(timezone.utc).isoformat(),
     }
     if new_task_id_b:
         data["task_id_b"] = new_task_id_b
