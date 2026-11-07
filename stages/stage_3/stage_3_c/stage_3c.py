@@ -1,6 +1,7 @@
 import random
 
 from constants import RoleAssignees, TaskStatus, get_due_date
+from core.helpers import notify_acompanhamento
 from core.logger import get_logger
 from integrations.clickup import create_task, get_task
 
@@ -57,8 +58,8 @@ def create_stage_3c(project: dict) -> str | None:
         return None
     
     task_id = task["id"]
-    logger.info(
-        f"{project['company_name']} está na etapa de Revisar a IA - Task-Id: {task_id}",
-        extra={"notify_acompanhamento": True},
+    notify_acompanhamento(
+        f"🧐{project['company_name']} está na etapa de Revisar a IA",
+        f"Task-Id: {task_id}",
     )
     return task_id

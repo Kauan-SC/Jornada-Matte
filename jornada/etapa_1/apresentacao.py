@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 from constants import Pipeline, ProjectStatus, RoleAssignees, Stages, get_due_date
 from core.database import supabase
-from core.helpers import msg_error
+from core.helpers import msg_error, notify_acompanhamento
 from core.logger import get_logger
 from integrations.clickup import create_subtask, create_task
 
@@ -13,7 +13,7 @@ logger = get_logger(__name__)
 def run(client_name: str, company_name: str) -> dict | None:
 
     # Histórico do projeto no log
-    logger.info(f"{company_name} - Acabou de iniciar sua Jornada com a Matte", extra={"notify_acompanhamento": True})
+    notify_acompanhamento(f"{company_name} - Acabou de iniciar sua Jornada com a Matte")
 
     # Data de vencimento da tarefa, 3 dias a partir da criação
     data = get_due_date(3)

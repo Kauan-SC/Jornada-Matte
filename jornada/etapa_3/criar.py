@@ -1,5 +1,5 @@
 from constants import Pipeline, get_due_date
-from core.helpers import msg_error
+from core.helpers import msg_error, notify_acompanhamento
 from core.logger import get_logger
 from integrations.clickup import create_task
 
@@ -33,10 +33,10 @@ def create_stage_3b(project: dict) -> str | None:
     
     task_id = task["id"]
 
-    logger.info(
-        f"{project['company_name']} está na etapa de criar IA - Task-Id: {task_id}",
-        extra={"notify_acompanhamento": True},
+    notify_acompanhamento(
+        f"{project['company_name']} está na etapa de criar IA",
+        f"Task-Id: {task_id}",
     )
-    
+
     return task_id
     

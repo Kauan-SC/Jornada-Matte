@@ -1,9 +1,13 @@
 import logging
 import random
+import sys
 import time
 from collections.abc import Callable
 from functools import wraps
 
+import requests
+
+from config import DISCORD_WEBHOOK_URL_ACOMPANHAMENTO
 from constants import RoleAssignees
 from integrations.clickup import get_task, is_task_completed
 
@@ -39,6 +43,44 @@ def msg_error(stage: str, company_name: str, client_name: str, motivo: str, task
     if task_id:
         base += f" | Task ID: {task_id}"
     return f"{base} | Motivo: {motivo}"
+
+# ------------------------------------------------------------------------------
+
+# Mensagem em formato Embed para Discord
+IS_COMPONENTS_V2 = 1 << 15
+
+def _text(content: str) -> dict:
+    return {"type": 10, "content": content}
+
+def _divider() -> dict:
+    return {"type": 14, "spacing": 1, "divider": True}
+
+def notify_acompanhamento(*lines: str) -> None:
+    if not DISCORD_WEBHOOK_URL_ACOMPANHAMENTO:
+        return
+
+    components = []
+    for i, line in enumerate(lines):
+        if i > 0:
+            components.append(_divider())
+        components.append(_text(line))
+
+    payload = {
+        "flags": IS_COMPONENTS_V2,
+        "components": [
+            {
+                "type": 17,
+                "components": components,
+            }
+        ],
+    }
+
+    try:
+        resp = requests.post(DISCORD_WEBHOOK_URL_ACOMPANHAMENTO, json=payload, timeout=5.0)
+        if resp.status_code not in (200, 204, 429):
+            print(f"Discord notify_acompanhamento falhou: {resp.status_code}: {resp.content}", file=sys.stderr)
+    except Exception as e:
+        print(f"Erro ao enviar notify_acompanhamento para o Discord: {e}", file=sys.stderr)
 
 # ------------------------------------------------------------------------------
 

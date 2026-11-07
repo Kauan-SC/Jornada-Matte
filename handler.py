@@ -2,6 +2,7 @@ import json
 import time
 import traceback
 
+from core.helpers import notify_acompanhamento
 from core.logger import get_logger
 from stages.stage_1.stage_1 import run
 
@@ -23,9 +24,12 @@ def webhook(event: dict, context: object) -> dict:
         client_name: str = body["client_name"]
         company_name: str = body["company_name"]
 
-        run(client_name, company_name)            
+        run(client_name, company_name)
 
-        logger.info(f"Projeto Iniciado - {company_name} {client_name}", extra={"notify_acompanhamento": True})
+        notify_acompanhamento(
+            f"🛠️Projeto da empresa {company_name} foi iniciado.",
+            f"Nome do cliente: {client_name}",
+        )
 
         return {
             "statusCode": 200,
