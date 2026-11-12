@@ -58,7 +58,16 @@ Checkpoint(30 em 30 dias)
 
 # Como dar Deploy
 
+## Windows (WSL)
+
 - Abra o PowerShell modo admin
 - Escreva: "wsl"
 - Abrir pasta cd "/mnt/c/Personal/Programming/Python/Jornada Matte - Automação Python"
 - Depois de "serverless deploy"
+
+## Linux
+
+```bash
+cd ~/Pessoal/Code/Jornada-Matte
+npx serverless deploy 
+```

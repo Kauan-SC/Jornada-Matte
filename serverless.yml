@@ -5,9 +5,10 @@ configValidationMode: error
 provider:
   name: aws
   runtime: python3.11
+  profile: matte
+  region: us-east-1
   httpApi:
     cors: true
-  
 
 functions:
   jornada-matte:
